@@ -11,7 +11,7 @@ library(raster)
 library(DT)
 library(rgdal)
 library(RColorBrewer)
-
+library(rlocker)
 
 #bankc for challenge bank
 
@@ -24,7 +24,70 @@ bankc =
 # Define server logic required to draw a histogram
 shinyServer(function(input, output,session) {
 
-  ##########################Go buttons##################################### 
+################R locker test section###################
+  # Initialize Learning Locker connection
+  connection <- 
+    rlocker::connect(session, list(
+    base_url = "https://learning-locker.stat.vmhost.psu.edu/",
+    auth = "Basic ZDQ2OTNhZWZhN2Q0ODRhYTU4OTFmOTlhNWE1YzBkMjQxMjFmMGZiZjo4N2IwYzc3Mjc1MzU3MWZkMzc1ZDliY2YzOTNjMGZiNzcxOThiYWU2",
+    agent = rlocker::createAgent()
+  ))
+  
+  # Import hlpers functions to setup demo app and user
+  # source('./helpers.R', local = TRUE)
+  
+  ##Below are the code from helpers.R
+  currentUser <- 
+    connection$agent
+  #What is statement here
+  #Bind question input items to observers
+  registerQuestionEvents <- function(session, questions){
+    observe({
+      sapply(questions, function (question) {
+        observeEvent(session$input[[question$id]], {
+          statement <- rlocker::createStatement(
+            list(
+              verb = list(
+                display = "answered"
+              ),
+              object = list(
+                id = paste0(getCurrentAddress(session), "#", question$id),
+                name = question$title,
+                description = question$text
+              ),
+              result = list(
+                success = session$input[[question$id]] == question$answer,
+                response = session$input[[question$id]]
+              )
+            )
+          )
+          
+          renderxAPIStatement(session, question, statement)
+          
+          # Store statement in locker and return status
+          status <- rlocker::store(session, statement)
+          
+          # Render status code popup notification
+          ifelse(
+            status == 200,
+            showNotification('Statement stored.', type = 'message'),
+            showNotification('Failed to store statement.', type = 'error')
+          )
+        })
+      })
+    })
+  }
+  
+  ##End helpers.R
+################R locker test section end###################
+  
+##########################Go buttons##################################### 
+  observeEvent(input$reset,{
+    updateButton(session, "submit", disabled = FALSE)
+    updateButton(session, "nextButton", disabled = FALSE)
+  })
+  
+  
   observeEvent(input$infoex,{
     sendSweetAlert(
       session = session,

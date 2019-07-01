@@ -18,23 +18,25 @@ library(shinyWidgets)
 library(rlocker)
 #smiles
 
-#This app will be used to explore and play around with the assumptions and diagnostics of regression
-
+#This app will be used to explore and play around with the assumptions and 
+#diagnostics of regression
 
 shinyUI <- dashboardPage(
-                         dashboardHeader(title = "Regression Assumptions and Diagnostics",
+                         dashboardHeader(title = "Assumption",
+                                         tags$li(class="dropdown",
+                                                 tags$a(href="https://shinyapps.science.psu.edu/",
+                                                        icon("home", lib="font-awesome"))),
+                                         tags$li(class="dropdown",
+                                                 actionLink("info", icon("info"), class="myClass")),
                                          titleWidth = 200),
                          #adding prereq pages and game pages
                          dashboardSidebar(
                            width = 220,
-
                            sidebarMenu(id="tabs",
-
                                        menuItem("Prerequisites", tabName= "prereq", icon=icon("book")),
                                        menuItem("Overview",tabName = "instruction", icon = icon("dashboard")),
                                        menuItem("Explore",tabName = "explore", icon = icon("wpexplorer")),
                                        menuItem("Game", tabName = "qqq", icon= icon("gamepad"))
-
                            )
                          ),
 
@@ -92,11 +94,11 @@ shinyUI <- dashboardPage(
                                     h4(tags$li("In the game, the object is to win at tic-tac-toe where you are playing X's.  Select a square, then answer the question.
        If you get the question correct, an X goes in the square.  If you get it wrong, an O goes in the square.")),
                                     div(style = "text-align: center",
-                                        bsButton(inputId = "go", label =  "Go to Exploration",icon("bolt"), style= "danger", size= "large", class="circle grow")
+                                        bsButton(inputId = "go", label =  "Explore",icon("bolt"), style= "danger", size= "large", class="circle grow")
                                     ),
                                     br(),
                                     h3(strong("Acknowledgements:")),
-                                    h4("This app was developed and coded by TJ McIntyre, with the help of Ryan Voyack.")
+                                    h4("This app was developed and coded by TJ McIntyre, with the help of Ryan Voyack, and updated by Yiyun Gong.")
 
                              ),
 
@@ -124,12 +126,12 @@ shinyUI <- dashboardPage(
 
 
                            tabItem(tabName = "explore",
-                                   div(style="display: inline-block;vertical-align:top;",
-                                       tags$a(href='https://shinyapps.science.psu.edu/',tags$img(src='homebut.PNG', width = 19)),
-                                       circleButton("infoex",icon = icon("info"), status = "myClass",size = "xs")
-                                   ),
+                                   # div(style="display: inline-block;vertical-align:top;",
+                                   #     tags$a(href='https://shinyapps.science.psu.edu/',tags$img(src='homebut.PNG', width = 19)),
+                                   #     circleButton("infoex",icon = icon("info"), status = "myClass",size = "xs")
+                                   # ),
                                    fluidRow(
-                                     column(h2("Transformations, Sample size, and Variances vs. Diagnostic plots"), 
+                                     column(h2(strong("Transformations, Sample size, and Variances vs. Diagnostic plots")), 
                                             width = 12),
                                      #img(src = "pink.jpg", width = 40, offset = 30), 
                                      column(h4("Each model is generated with Y as the response variable and X1 
@@ -178,7 +180,7 @@ shinyUI <- dashboardPage(
                                       #bsPopover(id= "y",title= "Transformation Hint", content="Transform Y when non-normality or unequal variances are in question",
                                                 #placement= "top", trigger = "click", options = NULL),
 
-                                      bsButton("submitD", "See Results", style = "danger", icon("retweet"), size = "median"),
+                                      bsButton("submitD", "See Results", style = "danger", icon("retweet"), size = "median", class="circle grow"),
                                       #bsButton("submitD", "Results for a New Sample", style = "danger", icon("retweet"), size = "median"),
                                       
                                       br(),
@@ -194,13 +196,13 @@ shinyUI <- dashboardPage(
                                       br(),
 
                                       fluidRow(
-                                        column(h3("Adjust the inputs to complete the activity:"), width = 12)),
+                                        column(h3(strong("Adjust the inputs to complete the activity:")), width = 12)),
                                     wellPanel(
 
                                        fluidRow(column(uiOutput("challenges"), width = 12))
                                    ),
 
-                                   fluidRow(column(h3("Feedback:"), width = 12)),
+                                   fluidRow(column(h3(strong("Feedback:")), width = 12)),
 
                                     wellPanel(
                                       fluidRow(column(uiOutput("answers"), width = 12))
@@ -214,13 +216,13 @@ shinyUI <- dashboardPage(
 
 
                             tabItem(tabName = "qqq",
-                                    div(style="display: inline-block;vertical-align:top;",
-                                        tags$a(href='https://shinyapps.science.psu.edu/',tags$img(src='homebut.PNG', width = 19))
-                                    ),
-                                    div(style="display: inline-block;vertical-align:top;",
-                                        circleButton("info",icon = icon("info"), status = "myClass",size = "xs")
-                                    ),
-                                   fluidRow(column(h2("Tic-Tac-Toe"), width = 12),
+                                    # div(style="display: inline-block;vertical-align:top;",
+                                    #     tags$a(href='https://shinyapps.science.psu.edu/',tags$img(src='homebut.PNG', width = 19))
+                                    # ),
+                                    # div(style="display: inline-block;vertical-align:top;",
+                                    #     circleButton("info",icon = icon("info"), status = "myClass",size = "xs")
+                                    # ),
+                                   fluidRow(column(h2(strong("Tic-Tac-Toe")), width = 12),
                                             #column(1,img(src = "pink.jpg", width = 20)),
                                             column(h4("You will get an X for a correct answers and 
                                                      the computer will get an O for a wrong answer."), width = 11)),
@@ -246,10 +248,10 @@ shinyUI <- dashboardPage(
                                             )
                                      ),
                                      column(2,
-                                            bsButton(inputId = 'submit', label = 'Submit Answer', style= 'danger')
+                                            bsButton(inputId = 'submit', label = 'Submit Answer', style= 'danger', disabled = TRUE)
                                      ),
                                      column(1,
-                                            bsButton(inputId = "nextButton",label = "Next Question", style= 'danger')
+                                            bsButton(inputId = "nextButton",label = "Next Question", style= 'danger', disabled = TRUE)
                                      )
                                    ),
                                    fluidRow(
@@ -269,10 +271,6 @@ shinyUI <- dashboardPage(
                                    )
 
                            )
-
-
-
-
                          )
                          )
 
