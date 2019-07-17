@@ -427,11 +427,11 @@ shinyServer(function(input, output,session) {
   ########################## Output for answer box when nothing is in the box #############################
   
   observeEvent(input$challenge,{
-    output$answers <- renderText("Please hit the view feedback button for feedback")
+    output$answers <- renderUI(tags$h4("Please hit the view feedback button for feedback"))
   }) 
   
   observeEvent(input$go,{
-    output$answers <- renderText("Please hit the view feedback button for feedback")
+    output$answers <- renderUI(tags$h4("Please hit the view feedback button for feedback"))
   })  
    
   ###################### output of the answers ################################

@@ -98,7 +98,7 @@ shinyUI <- dashboardPage(
                                     ),
                                     br(),
                                     h3(strong("Acknowledgements:")),
-                                    h4("This app was developed and coded by TJ McIntyre, with the help of Ryan Voyack, and updated by Yiyun Gong.")
+                                    h4("This app was developed and coded by TJ McIntyre, with the help of Ryan Voyack.")
 
                              ),
 
@@ -180,13 +180,13 @@ shinyUI <- dashboardPage(
                                       #bsPopover(id= "y",title= "Transformation Hint", content="Transform Y when non-normality or unequal variances are in question",
                                                 #placement= "top", trigger = "click", options = NULL),
 
-                                      bsButton("submitD", "See Results", style = "danger", icon("retweet"), size = "median", class="circle grow"),
+                                      bsButton("submitD", "See Results", style = "danger", icon("retweet"), size = "large", class="circle grow"),
                                       #bsButton("submitD", "Results for a New Sample", style = "danger", icon("retweet"), size = "median"),
                                       
                                       br(),
                                       br(),
 
-                                   bsButton("begin","Go to the Game",icon("bolt"),style = "danger",size = "median",class="circle grow")
+                                   bsButton("begin","Go to the Game",icon("bolt"),style = "danger",size = "large",class="circle grow")
 
 
                                     ),
@@ -207,8 +207,8 @@ shinyUI <- dashboardPage(
                                     wellPanel(
                                       fluidRow(column(uiOutput("answers"), width = 12))
                                     ),
-                                      bsButton("challenge", "New Activity", style= "danger"),
-                                      bsButton("answer", "View Feedback", style= "danger")
+                                      bsButton("challenge", "New Activity", style= "danger", size="large"),
+                                      bsButton("answer", "View Feedback", style= "danger", size="large")
 
                                     ))
 
